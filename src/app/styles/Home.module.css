@@ -10,8 +10,18 @@
 
 .title {
   font-size: 2.5rem;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   color: #333;
+}
+
+.textBox {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 40px;
+  font-size: 1rem;
+  color: black;
+  border: 2px solid #007bff;
+  border-radius: 5px;
 }
 
 .uploadContainer {
