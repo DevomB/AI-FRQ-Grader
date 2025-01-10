@@ -14,14 +14,35 @@
   color: #333;
 }
 
+.textBoxContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
 .textBox {
   width: 300px;
   padding: 10px;
-  margin-bottom: 40px;
   font-size: 1rem;
-  color: black;
   border: 2px solid #007bff;
   border-radius: 5px;
+  margin-right: 10px;
+  color: black; /* Ensure text color is black */
+}
+
+.submitButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
 }
 
 .uploadContainer {
@@ -42,6 +63,7 @@
   justify-content: center;
   background-color: #fff;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .uploadBox:hover {
