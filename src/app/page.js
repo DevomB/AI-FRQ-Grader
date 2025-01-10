@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import styles from '../app/styles/Home.module.css';
 
 export default function Home() {
   const [text, setText] = useState('');
