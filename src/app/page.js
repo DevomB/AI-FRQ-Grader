@@ -1,17 +1,24 @@
+import * as motion from "motion/react-client"
 import React from "react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center bg-gradient-to-b from-white to-gray-100 min-h-screen">
+    <div className="flex flex-col items-center bg-gradient-to-br from-white to-purple-100 min-h-screen">
 
       {/* Hero Section */}
-      <main className="flex flex-col items-center text-center py-20 px-8">
+      <motion.main
+        className="flex flex-col items-center text-center pt-4 px-8 z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+
         {/* Title with Gradient */}
-        <h1 className="text-8xl font-bold mb-4 bg-gradient-to-r from-blue-900 to-orange-700 text-transparent bg-clip-text drop-shadow-lg">
+        <h1 className="text-9xl font-serif font-bold pb-6 bg-gradient-to-r from-yellow-600 to-purple-600 text-transparent bg-clip-text drop-shadow-lg">
           Intelligrader
         </h1>
         {/* Subtitle */}
-        <h2 className="text-3xl font-semibold text-gray-700 mb-12">
+        <h2 className="text-3xl font-serif font-semibold text-black mb-12">
           The APUSH DBQ Grader
         </h2>
 
@@ -29,7 +36,7 @@ export default function Home() {
           {/* File Upload 1 */}
           <div>
             <div
-              className="flex flex-col justify-center items-center border-2 border-dashed border-blue-400 rounded-lg p-6 bg-gray-50 hover:bg-blue-50 transition shadow-sm relative"
+              className="flex flex-col justify-center items-center border-2 border-dashed border-blue-900 rounded-lg p-6 bg-gradient-to-b from-green-100 to-blue-100 hover:bg-blue-50 transition shadow-sm relative"
             >
               <input
                 type="file"
@@ -38,7 +45,7 @@ export default function Home() {
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-12 w-12 text-blue-600 hover:scale-110 transition"
+                className="h-12 w-12 text-blue-700 hover:scale-110 transition"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -50,7 +57,7 @@ export default function Home() {
                   d="M3 10l9-9m0 0l9 9m-9-9v16"
                 />
               </svg>
-              <p className="mt-2 text-blue-600 font-bold text-lg">Upload DBQ Documents</p>
+              <p className="mt-2 text-blue-900 font-bold text-lg">Upload DBQ Documents</p>
               <p className="mt-1 text-gray-500 text-sm">Supports PDF, DOCX, TXT</p>
             </div>
           </div>
@@ -58,7 +65,7 @@ export default function Home() {
           {/* File Upload 2 */}
           <div>
             <div
-              className="flex flex-col justify-center items-center border-2 border-dashed border-green-400 rounded-lg p-6 bg-gray-50 hover:bg-green-50 transition shadow-sm relative"
+              className="flex flex-col justify-center items-center border-2 border-dashed border-yellow-700 rounded-lg p-6 bg-gray-50 hover:bg-orange-50 transition shadow-sm relative"
             >
               <input
                 type="file"
@@ -67,7 +74,7 @@ export default function Home() {
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-12 w-12 text-green-600 hover:scale-110 transition"
+                className="h-12 w-12 text-orange-600 hover:scale-110 transition"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -79,7 +86,7 @@ export default function Home() {
                   d="M3 10l9-9m0 0l9 9m-9-9v16"
                 />
               </svg>
-              <p className="mt-2 text-green-600 font-bold text-lg">Upload Your Response</p>
+              <p className="mt-2 text-orange-700 font-bold text-lg">Upload Your Response</p>
               <p className="mt-1 text-gray-500 text-sm">Supports PDF, DOCX, TXT</p>
             </div>
           </div>
@@ -88,17 +95,68 @@ export default function Home() {
         {/* Submit Button */}
         <div className="mt-10">
           <button
-            className="px-6 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 rounded-lg shadow-lg transition transform hover:scale-105"
+            className="px-6 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-700 to-purple-600 hover:from-blue-600 hover:to-yellow-600 rounded-lg shadow-lg transition transform hover:scale-110"
           >
             Grade Now
           </button>
         </div>
-      </main>
+      </motion.main>
 
-      {/* Footer */}
-      <footer className="text-center py-6 text-gray-600 text-sm mt-auto">
-        © 2025 Intelligrader. All rights reserved. | <a href="#" className="text-blue-500 hover:underline">Privacy Policy</a> | <a href="#" className="text-blue-500 hover:underline">Terms of Service</a>
-      </footer>
+      {/* Transparent Blocks */}
+      <motion.div
+        className="absolute top-40 left-40 h-48 w-48 bg-yellow-500 opacity-10"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 0.2, scale: 1 }}
+        transition={{
+            duration: 1, delay: 0.55,
+            scale: { type: "spring", delay: 0.75, visualDuration: 0.4, bounce: 0.1}}}
+      ></motion.div>
+        <motion.div
+        className="absolute top-40 right-40 h-48 w-48 bg-yellow-500 opacity-10"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 0.2, scale: 1 }}
+        transition={{
+            duration: 1, delay: 0.55,
+            scale: { type: "spring", delay: 0.75, visualDuration: 0.4, bounce: 0.1}}}
+      ></motion.div>
+      <motion.div
+        className="absolute bottom-80 left-80 h-48 w-48 bg-yellow-500 opacity-10"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 0.2, scale: 1 }}
+        transition={{
+            duration: 1, delay: 0.25,
+            scale: { type: "spring", delay: 0.35, visualDuration: 0.4, bounce: 0.1}}}
+      ></motion.div>
+        <motion.div
+        className="absolute bottom-80 right-80 h-48 w-48 bg-yellow-500 opacity-10"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 0.2, scale: 1 }}
+        transition={{
+            duration: 1, delay: 0.25,
+            scale: { type: "spring", delay: 0.35, visualDuration: 0.4, bounce: 0.1}}}
+      ></motion.div>
+      <motion.div
+        className="absolute bottom-40 left-40 h-48 w-48 bg-yellow-500 opacity-10"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 0.2, scale: 1 }}
+        transition={{
+            duration: 1, delay: 1,
+            scale: { type: "spring", delay: 1.1, visualDuration: 0.4, bounce: 0.1}}}
+      ></motion.div>
+        <motion.div
+        className="absolute bottom-40 right-40 h-48 w-48 bg-yellow-500 opacity-10"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 0.2, scale: 1 }}
+        transition={{
+            duration: 1,delay: 1,
+            scale: { type: "spring", delay: 1.1, visualDuration: 0.4, bounce: 0.1}}}
+      ></motion.div>
+
+      <div className="w-full bg-purple-700 text-white py-6 mt-auto">
+        <footer className="text-center text-sm font-bold">
+          © 2025 Intelligrader. All rights reserved. | <a href="#" className="text-blue-400 hover:underline">Privacy Policy</a> | <a href="#" className="text-blue-400 hover:underline">Terms of Service</a>
+        </footer>
+      </div>
     </div>
   );
 }

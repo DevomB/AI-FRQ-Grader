@@ -1,3 +1,5 @@
+import { Bodoni_Moda_SC } from 'next/font/google';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -11,7 +13,12 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'],
+        serif: ['Megrim', 'serif']
+      },
     },
   },
+  variants: {},
   plugins: [],
 };

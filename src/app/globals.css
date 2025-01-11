@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Iceberg&family=Megrim&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,4 +20,10 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.square {
+  height: 50px;
+  width: 50px;
+  background-color: #555;
 }
