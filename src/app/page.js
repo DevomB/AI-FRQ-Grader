@@ -100,6 +100,7 @@ export default function Home() {
             Grade Now
           </button>
         </div>
+        <br></br>
       </motion.main>
 
       {/* Transparent Blocks */}
