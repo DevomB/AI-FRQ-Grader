@@ -19,21 +19,23 @@ const generationConfig = {
     responseMimeType: "text/plain",
 };
 
-
 async function run({ input }) {
     const chatSession = model.startChat({
         generationConfig,
-        history: [
-        ],
+        history: [],
     });
 
-    const result = await chatSession.sendMessage({input});
-    console.log(result.response.text());
-    console.log(input);
+    try {
+        const result = await chatSession.sendMessage(input);
+        const responseText = await result.response.text();
+        console.log(input);
+        console.log(responseText);
+    } catch (error) {
+        console.error("Error:", error);
+    }
 }
 
 export default function Home() {
-
     const [input, setInput] = useState("");
 
     return (
@@ -74,7 +76,7 @@ export default function Home() {
                     <button
                         className="px-6 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-700 to-purple-600 hover:from-blue-600 hover:to-yellow-600 rounded-lg shadow-lg transition transform hover:scale-110"
                         onClick={() => run({ input: "Grade this APUSH DBQ " + input })}
-                        >
+                    >
                         Grade Now
                     </button>
                 </div>
