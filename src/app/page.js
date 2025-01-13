@@ -1,8 +1,9 @@
 'use client'
 
-import * as motion from "motion/react-client"
+import * as motion from "motion/react-client";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
@@ -19,7 +20,7 @@ const generationConfig = {
     responseMimeType: "text/plain",
 };
 
-async function run({ input }) {
+async function run({ input, router }) {
     const chatSession = model.startChat({
         generationConfig,
         history: [],
@@ -28,14 +29,19 @@ async function run({ input }) {
     try {
         const result = await chatSession.sendMessage(input);
         const responseText = await result.response.text();
-        console.log(input);
-        console.log(responseText);
+
+
+        const path = `/result?response=${encodeURIComponent(responseText)}`; // Pass responseText as a query parameter
+        console.log('Navigating to path:', path);
+        console.log('Router: ' + router);
+        router.push(path);
     } catch (error) {
-        console.error("Error:", error);
+        console.error('Error during chat session:', error);
     }
 }
 
 export default function Home() {
+  const router = useRouter();
   const [blocks, setBlocks] = useState([]);
   const [input, setInput] = useState("");
   const gridSize = 32; // Grid dimensions (odd number for symmetry)
@@ -69,7 +75,10 @@ export default function Home() {
     setBlocks(initialBlocks);
   }, []); // Empty dependency array ensures this runs only once
 
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await run({ input, router });
+  };
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-white to-purple-100 min-h-screen">
@@ -116,23 +125,21 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-10 w-full max-w-2xl">
             {/* Text Box */}
             <div>
-              <input
-                type="text"
-                placeholder="DBQ Response"
-                className="w-full p-4 border rounded-lg shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={(e) => setInput(e.target.value)}
-              />
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  placeholder="DBQ Response"
+                  className="w-full p-4 border rounded-lg shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={(e) => setInput(e.target.value)}
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-700 to-purple-600 rounded-lg shadow-lg transition transform hover:scale-110"
+                >
+                  Grade Now
+                </button>
+              </form>
             </div>
-          </div>
-
-          {/* Submit Button */}
-          <div className="mt-10">
-            <button
-              className="px-6 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-700 to-purple-600 rounded-lg shadow-lg transition transform hover:scale-110"
-              onClick={() => run({ input: "Grade this APUSH DBQ " + input })}
-            >
-              Grade Now
-            </button>
           </div>
         <br></br>
       </motion.main>
