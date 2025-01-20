@@ -1,21 +1,24 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { marked } from "marked";
+
+const getHTMLFromMarkdown = (markdown) => {
+    if (!markdown) {
+        return "<p>No content available</p>";
+    }
+    return marked(markdown);
+};
 
 const ResultPage = () => {
     const router = useRouter();
     const { response } = router.query; // Access the response query parameter
+    const responseAsString = Array.isArray(response) ? response[0] : response;
 
     return (
-        <div className="flex flex-col items-center bg-gradient-to-br from-white to-purple-100 min-h-screen">
-            <h1 className="text-4xl font-bold mt-10">Result Page</h1>
-            <p className="mt-4">This is the result page.</p>
-            {response && (
-                <div className="mt-4 p-4 bg-white rounded shadow">
-                    <h2 className="text-2xl font-semibold">Response:</h2>
-                    <p>{response}</p>
-                </div>
-            )}
-        </div>
+        <main
+            style={{ padding: "20px", fontFamily: "Arial, sans-serif", lineHeight: "1.6" }}
+            dangerouslySetInnerHTML={{ __html: getHTMLFromMarkdown(responseAsString) }}
+        />
     );
 };
 
