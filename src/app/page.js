@@ -1,35 +1,25 @@
 'use client'
 
 import * as motion from "motion/react-client";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
-const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenerativeAI(apiKey);
-
-const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash-exp",
-});
-
-const generationConfig = {
-    temperature: 0.35,
-    topP: 0.95,
-    topK: 40,
-    maxOutputTokens: 8192,
-    responseMimeType: "text/plain",
-};
-
 async function run({ input, router }) {
-    const chatSession = model.startChat({
-        generationConfig,
-        history: [],
-    });
-
     try {
-        const result = await chatSession.sendMessage(input);
-        const responseText = await result.response.text();
+        const response = await fetch('/api/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ input }),
+        });
 
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        const responseText = data.response;
 
         const path = `/result?response=${encodeURIComponent(responseText)}`; // Pass responseText as a query parameter
         console.log('Navigating to path:', path);
