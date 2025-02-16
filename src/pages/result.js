@@ -11,85 +11,195 @@ const getHTMLFromMarkdown = (markdown) => {
 
 const ResultPage = () => {
     const router = useRouter();
-    const { response } = router.query; // Access the response query parameter
+    const { response } = router.query;
     const responseAsString = Array.isArray(response) ? response[0] : response;
+    const [sidebarOpen, setSidebarOpen] = useState(true);
 
-    const [characters, setCharacters] = useState([]);
-
-    // Break text into characters (including spaces)
-    useEffect(() => {
-        const text = "Design In Development";
-        setCharacters(text.split(""));
-    }, []);
+    const handleHomeButtonClick = () => {
+        router.push('/'); // Navigate to the home page
+    };
 
     return (
-        <div className="bg-gray-700 min-h-screen flex flex-col justify-between text-white">
-            {/* Content Section */}
-            <div>
-                <h1 className="text-9xl font-serif font-bold pb-6 bg-gradient-to-r from-yellow-600 to-purple-600 text-transparent bg-clip-text drop-shadow-lg transition transform hover:scale-105 text-center">
-                    Results Page
-                </h1>
+        <div className="container">
+            {/* Sidebar */}
+            <aside className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
+                <h2 className="toggle-button" onClick={() => setSidebarOpen(!sidebarOpen)}>☰</h2>
+                <ul>
+                <li>
+                    <button
+                        className="home-button"
+                        onClick={handleHomeButtonClick}  // On click, navigate to home
+                    >
+                        Home
+                    </button>
+                </li>
+                </ul>
+            </aside>
+
+            {/* Main Chat-like Content */}
+            <main className="chat-container">
+                <h1 className="chat-title">Results Page</h1>
                 <div
-                    style={{ paddingLeft: "10px", fontFamily: "Arial, sans-serif", lineHeight: "1.6" }}
+                    className="chat-message"
                     dangerouslySetInnerHTML={{ __html: getHTMLFromMarkdown(responseAsString) }}
                 ></div>
-            </div>
+            </main>
 
-            {/* Animated Bottom Bar */}
-            <div className="ticker-wrapper">
-                <div className="ticker">
-                    {characters.map((char, index) => (
-                        <span
-                            key={index}
-                            className="ticker-char"
-                            style={{ animationDelay: `${index * 0.2}s` }} // Stagger animation
-                        >
-                            {char === " " ? "\u00A0" : char} {/* Preserve spaces */}
-                        </span>
-                    ))}
-                </div>
-            </div>
-
-            <style jsx>{`
-                .ticker-wrapper {
-                    position: fixed;
-                    bottom: 0;
-                    width: 100%;
-                    background: linear-gradient(to right, #007bff, #6a0dad);
-                    color: white;
-                    font-size: 2rem;
-                    font-weight: bold;
-                    overflow: hidden;
-                    height: 3rem;
+            {/* CSS Styles */}
+            <style>{`
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    font-family: 'Poppins', sans-serif;
                 }
 
-                .ticker {
+                .container {
                     display: flex;
+                    height: 100vh;
+                    background: radial-gradient(circle, #2d2e32, #1c1c1f);
+                    color: white;
+                    overflow: hidden;
+                }
+
+                /* Sidebar Styling */
+                .sidebar {
+                    width: 200px;
+                    background: rgba(40, 40, 45, 0.9);
+                    padding: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    backdrop-filter: blur(10px);
+                    border-right: 1px solid rgba(255, 255, 255, 0.1);
+                    transition: width 0.3s ease-in-out;
+                }
+
+                .sidebar.closed {
+                    width: 60px;
+                    align-items: center;
+                }
+
+                .toggle-button {
+                    font-size: 2rem;
+                    margin-bottom: 20px;
+                    color: #fff;
+                    cursor: pointer;
+                    transition: transform 0.2s ease-in-out;
+                    align-self: center;
+                }
+
+                .toggle-button:hover {
+                    transform: scale(1.1);
+                }
+
+                .sidebar ul {
+                    list-style: none;
+                    padding: 0;
+                    width: 100%;
+                }
+
+                .sidebar li {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px;
+                    cursor: pointer;
+                    font-size: 1.2rem;
+                    border-radius: 8px;
+                    transition: background 0.3s, transform 0.2s ease-in-out;
+                }
+
+                .sidebar li:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    transform: scale(1.05);
+                }
+
+                .icon {
+                    margin-right: 12px;
+                    font-size: 1.5rem;
+                }
+
+                .label {
+                    transition: opacity 0.3s ease-in-out;
                     white-space: nowrap;
-                    animation: scroll 20s linear infinite; /* Move the whole ticker */
                 }
 
-                /* Move the entire ticker from right to left */
-                @keyframes scroll {
-                    from {
-                        transform: translateX(100%);
-                    }
-                    to {
-                        transform: translateX(-100%);
-                    }
+                .sidebar.closed .label {
+                    display: none;
                 }
 
-                /* Fade out letters one by one */
-                @keyframes fadeOut {
-                    0% {
-                        opacity: 1;
-                    }
-                    90% {
-                        opacity: 1;
-                    }
-                    100% {
-                        opacity: 0;
-                    }
+                /* Home Button - Styled like other Sidebar Items */
+                .home-button {
+                    font-size: 1.2rem;
+                    padding: 12px;
+                    background: transparent;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                    text-align: left;
+                    width: 100%;
+                    border-radius: 8px;
+                    transition: background 0.3s, transform 0.2s ease-in-out;
+                }
+
+                /* Hide the Home Button when Sidebar is closed */
+                .sidebar.closed .home-button {
+                    display: none;
+                }
+
+                /* Hover effect for Home Button */
+                .home-button:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    transform: scale(1.05);
+                }
+
+                /* Chat Container */
+                .chat-container {
+                    flex-grow: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: flex-start;
+                    padding: 20px;
+                    padding-top: 10px;
+                    text-align: center;
+                    width: calc(100% - 60px);
+                    transition: width 0.3s ease-in-out;
+                    overflow-y: auto; 
+                }
+
+                .sidebar.open ~ .chat-container {
+                    width: calc(100% - 200px);
+                }
+
+                .chat-title {
+                    font-size: 2.5rem;
+                    background: linear-gradient(to right, #fbbf24, #9b4dca);
+                    -webkit-background-clip: text;
+                    color: transparent;
+                    margin-bottom: 15px;
+                    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+                    transition: transform 0.2s ease-in-out;
+                }
+
+                .chat-title:hover {
+                    transform: scale(1.05);
+                }
+
+                .chat-message {
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 0.5in; /* Ensures text does not touch the edge */
+                    border-radius: 12px;
+                    width: 98%; /* Stretches box closer to the edges */
+                    max-width: 98%;
+                    font-size: 1.3rem;
+                    text-align: left;
+                    backdrop-filter: blur(10px);
+                    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    white-space: normal;
+                    overflow-wrap: break-word;
+                    margin: 0 auto; /* Keeps it centered */
                 }
             `}</style>
         </div>
