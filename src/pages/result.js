@@ -38,7 +38,7 @@ const ResultPage = () => {
 
             {/* Main Chat-like Content */}
             <main className="chat-container">
-                <h1 className="chat-title">Results Page</h1>
+                <h1 className="chat-title">Results</h1>
                 <div
                     className="chat-message"
                     dangerouslySetInnerHTML={{ __html: getHTMLFromMarkdown(responseAsString) }}

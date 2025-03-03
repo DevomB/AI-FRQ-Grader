@@ -70,6 +70,10 @@ export default function Home() {
     await run({ input, router });
   };
 
+  const handleTOS = () => {
+    router.push('/tos'); // Navigate to the home page
+  };
+
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-white to-purple-100 min-h-screen">
       {/* Hero Section */}
@@ -167,9 +171,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full bg-purple-700 text-white py-6 mt-auto">
+      <div className="w-full bg-purple-700 text-white py-6 mt-auto z-20">
           <footer className="text-center text-sm font-bold">
-              © 2025 Intelligrader. All rights reserved. | <a href="#" className="text-blue-400 hover:underline">Privacy Policy</a> | <a href="#" className="text-blue-400 hover:underline">Terms of Service</a>
+              © 2025 Intelligrader. All rights reserved. | <a href="https://policies.google.com/privacy" className="text-blue-400 hover:underline">Privacy Policy</a> | <form action={handleTOS} className="text-blue-400 hover:underline"><input value={"Terms of Service"} type="submit"></input></form>
           </footer>
       </div>
     </div>
