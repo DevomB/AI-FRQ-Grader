@@ -11,7 +11,7 @@ async function run({ input, router }) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ input }),
+            body: JSON.stringify({ prompt: `Grade this APUSH DBQ: ${input}` }),
         });
 
         if (!response.ok) {

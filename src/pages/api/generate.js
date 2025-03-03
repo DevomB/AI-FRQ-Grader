@@ -5,7 +5,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    const { input } = req.body;
+    const { prompt } = req.body;
 
     const chatSession = model.startChat({
         generationConfig,
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     });
 
     try {
-        const result = await chatSession.sendMessage(input);
+        const result = await chatSession.sendMessage(prompt);
         const responseText = await result.response.text();
         res.status(200).json({ response: responseText });
     } catch (error) {
